@@ -1,15 +1,15 @@
-/* disable eslint */
+/* eslint-disable */
 
 import  { useEffect, useRef, useState } from 'react';
 import './App.css';
 
 function App() {
     const canvasRef = useRef(null);
-    const [bird, setBird] = useState({ x: 50, y: 150, width: 20, height: 20, gravity: 0.6, lift: -15, velocity: 0 });
+    const [bird, setBird] = useState({ x: 50, y: 150, width: 20, height: 20, gravity: 0.3, lift: -5, velocity: 0 }); // Decreased gravity and lift
     const [pipes, setPipes] = useState([]);
     const [gameOver, setGameOver] = useState(false);
-    const pipeWidth = 20;
-    const pipeGap = 100;
+    const pipeWidth = 40; // Increased width of the pipes
+    const pipeGap = 120; // Adjusted gap between pipes
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -63,7 +63,7 @@ function App() {
         setPipes(prevPipes => {
             let newPipes = prevPipes.map(pipe => ({ ...pipe, x: pipe.x - 2 }));
 
-            if (newPipes.length === 0 || newPipes[newPipes.length - 1].x < window.innerWidth - 150) {
+            if (newPipes.length === 0 || newPipes[newPipes.length - 1].x < window.innerWidth - 200) {
                 const pipeHeight = Math.floor(Math.random() * (window.innerHeight - pipeGap));
                 newPipes.push({ x: window.innerWidth, y: 0, width: pipeWidth, height: pipeHeight });
                 newPipes.push({ x: window.innerWidth, y: pipeHeight + pipeGap, width: pipeWidth, height: window.innerHeight - pipeHeight - pipeGap });
@@ -115,7 +115,7 @@ function App() {
     };
 
     const handleRetry = () => {
-        setBird({ x: 50, y: 150, width: 20, height: 20, gravity: 0.6, lift: -15, velocity: 0 });
+        setBird({ x: 50, y: 150, width: 20, height: 20, gravity: 0.3, lift: -5, velocity: 0 }); // Reset values with decreased sensitivity
         setPipes([]);
         setGameOver(false);
     };
